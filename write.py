@@ -12,6 +12,7 @@ You'll edit this file in Part 4.
 """
 import csv
 import json
+import math
 
 
 def write_to_csv(results, filename):
@@ -73,6 +74,11 @@ def write_to_json(results, filename):
         name = neo_data.get('name', '')
         potentially_hazardous = bool(result_data.get('potentially_hazardous'))
         
+        # Handle NaN value for diameter_km
+        diameter_km = neo_data.get('diameter_km')
+        if math.isnan(diameter_km):
+            diameter_km = None
+
         # Create a dictionary with required keys and values
         approach_info = {
             "datetime_utc": result_data['datetime_utc'],
@@ -85,7 +91,7 @@ def write_to_json(results, filename):
                 "potentially_hazardous": potentially_hazardous,
             }
         }
-        
+        print(neo_data)
         data.append(approach_info)
 
     # Write the data to the JSON file
