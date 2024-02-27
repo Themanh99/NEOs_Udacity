@@ -73,36 +73,60 @@ class AttributeFilter:
         return f"{self.__class__.__name__}(op=operator.{self.op.__name__}, value={self.value})"
 
 class DistanceFilter(AttributeFilter):
-    """Fillter object by distance"""
+    """Fillter object by distance.
+
+    :param approach: A CloseApproach object.
+    :return:
+        [float]: Returns the distance attribute.   
+    """
 
     @classmethod
     def get(cls, approach):
         return approach.distance
     
 class DateFilter(AttributeFilter):
-    """Fillter object by date time"""
+    """Fillter object by date time.
+
+    :param approach: A CloseApproach object.
+    :return:
+        [datetime.datetime]: Returns the date time attribute.   
+    """
 
     @classmethod
     def get(cls, approach):
         return approach.time.date()
     
 class DiameterFilter(AttributeFilter):
-    """Fillter object by diameter"""
+    """Fillter object by diameter.
+
+    :param approach: A CloseApproach object.
+    :return:
+        [float]: Returns the diameter attribute.   
+    """
 
     @classmethod
     def get(cls, approach):
         return approach.neo.diameter
     
 class VelocityFilter(AttributeFilter):
-    """Fillter object by velocity"""
+    """Fillter object by velocity.
+
+    :param approach: A CloseApproach object.
+    :return:
+        [float]: Returns the velocity attribute.   
+    """
 
     @classmethod
     def get(cls, approach):
         return approach.velocity
     
 class HazardousFilter(AttributeFilter):
-    """Fillter object by hazardous"""
+    """Fillter object by hazardous.
 
+    :param approach: A CloseApproach object.
+    :return:
+        [float]: Returns the hazardous attribute.    
+    """
     @classmethod
     def get(cls, approach):
         return approach.neo.hazardous
@@ -141,7 +165,6 @@ def create_filters(date=None, start_date=None, end_date=None,
     :param hazardous: Whether the NEO of a matching `CloseApproach` is potentially hazardous.
     :return: A collection of filters for use with `query`.
     """
-    # TODO: Decide how you will represent your filters.
     filters = [
         DateFilter(operator.eq, date) if date else None,
         DateFilter(operator.ge, start_date) if start_date else None,
@@ -169,7 +192,6 @@ def limit(iterator, n=None):
     :param n: The maximum number of values to produce.
     :yield: The first (at most) `n` values from the iterator.
     """
-    # TODO: Produce at most `n` values from the given iterator.
     if n is None or n == 0:
         return iterator
     return itertools.islice(iterator, n)
